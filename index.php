@@ -1,19 +1,22 @@
 <?php 
+    $array = "";
+    
     // connect to the database
     $db = mysqli_connect("localhost", "root", "", "todo");
 
     if(isset($_POST["submit"])) {
         $task = $_POST["task"];
-
-        mysqli_query($db, "INSERT INTO tasks (task) VALUES ('$task')");
-        header("location: index.php");
+        if (empty($task)) {
+            $errors = "You must fill in the task";
+        } else {
+            mysqli_query($db, "INSERT INTO tasks (task) VALUES ('$task')");
+            header("location: index.php");
+        }
     }
 
     $tasks = mysqli_query($db, "SELECT * FROM tasks");
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +29,10 @@
     </div>
     <div>
         <form method ="POST" action="index.php">
+        <?php if(isset($errors)) { ?>
+            <p><?php echo $errors; ?></p>
+        <?php } ?>
+
             <input type="text" name="task">
             <button type="submit" name="submit">Add Task</button>
         </form>
