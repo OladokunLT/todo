@@ -42,8 +42,8 @@
             <tbody>
             <?php while ($row = mysqli_fetch_array($tasks)) { ?>
                 <tr>
-                    <td> 1 </td>
-                    <td>This is the first task placeholder</td>
+                    <td> <?php echo $row['id']; ?> </td>
+                    <td><?php echo $row['task']; ?></td>
                     <td>
                         <a href = "#">X</a>
                     </td>
