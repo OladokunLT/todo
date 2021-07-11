@@ -14,6 +14,13 @@
         }
     }
 
+    //delete task
+    if (isset($_GET['del_task'])) {
+        $id = $_GET['del_task'];
+        mysqli_query($db, "DELETE FROM tasks WHERE id=$id");
+        header('location: index.php');
+;    }
+
     $tasks = mysqli_query($db, "SELECT * FROM tasks");
 
 ?>
@@ -47,16 +54,16 @@
             </thead>
 
             <tbody>
-            <?php while ($row = mysqli_fetch_array($tasks)) { ?>
+            <?php $i = 1; while ($row = mysqli_fetch_array($tasks)) { ?>
                 <tr>
-                    <td> <?php echo $row['id']; ?> </td>
+                    <td><?php echo $i; ?></td>
                     <td><?php echo $row['task']; ?></td>
                     <td>
-                        <a href = "#">X</a>
+                        <a href = "index.php?del_task=<?php echo $row['id']; ?>">X</a>
                     </td>
                 </tr>
 
-            <?php } ?>
+            <?php $i++; } ?>
                
             </tbody>
         </table>
